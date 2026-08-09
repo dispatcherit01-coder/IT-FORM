@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=860, user-scalable=yes, minimum-scale=0.2, maximum-scale=10"/>
+<title>Form Preventive Maintenance Radio Rig</title>
+<link rel="stylesheet" href="../assets/form.css"/>
+</head>
+<body>
+<div class="sheet">
+  <div class="form-outer">
+  <table class="header-table">
+  <tr>
+    <td class="cell-logo">
+      <div class="logo-wrap">
+        <img class="logo-img" src="https://lh3.googleusercontent.com/d/1-d2Km1jPqMdssikTLrKGc7q7m0qToqKb" onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1-d2Km1jPqMdssikTLrKGc7q7m0qToqKb'" alt="IMIP Logo"/>
+      </div>
+    </td>
+    <td class="cell-title">FORM PREVENTIVE MAINTENANCE RADIO RIG</td>
+    <td class="cell-meta">
+      <table class="meta-table">
+        <tr><td>No. Dokumen</td><td class="meta-val">: IMIP-<input type="text" style="width:50px"/></td></tr>
+        <tr><td>Tanggal Efektif</td><td class="meta-val">: <input type="text" style="width:78px"/></td></tr>
+        <tr><td>Revisi</td><td class="meta-val">: <input type="text" style="width:40px" value="0"/></td></tr>
+        <tr><td>&nbsp;</td><td class="meta-val"></td></tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+
+  <table class="info-outer">
+  <tr>
+    <td>
+      <table class="info-inner">
+        <tr><td class="lbl">Nomor Asset</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Type/ Model</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Serial Number</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Tahun Pembuatan</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr style="border-bottom:none"><td class="lbl">Lokasi Perangkat</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+      </table>
+    </td>
+    <td>
+      <table class="info-inner">
+        <tr><td class="lbl">Departement User</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">NIK User</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Nama User</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Periode Maintenance</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr style="border-bottom:none"><td class="lbl">Nama Teknisi</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+
+  <table class="tbl" style="table-layout:fixed;" id="radio-hwTable">
+  <colgroup>
+    <col style="width:4%"/><col style="width:40%"/><col style="width:9%"/><col style="width:9%"/><col style="width:38%"/>
+  </colgroup>
+  <thead>
+    <tr>
+      <th rowspan="2" class="tc-center">&nbsp;</th>
+      <th rowspan="2" style="text-align:left; padding-left:6px">HARDWARE CHECKING</th>
+      <th colspan="2" class="tc-center">KONDISI</th>
+      <th rowspan="2">KETERANGAN &amp; SARAN</th>
+    </tr>
+    <tr><th class="tc-center">NORMAL</th><th class="tc-center">RUSAK</th></tr>
+  </thead>
+  <tbody id="radio-hwBody"></tbody>
+  </table>
+
+  <div class="box" style="min-height:52px">
+    <div class="box-title">KETERANGAN UMUM :</div>
+    <textarea class="ket-area" rows="3"></textarea>
+  </div>
+
+  <div class="box" style="min-height:56px">
+    <div class="box-title">TINDAK LANJUT :</div>
+    <div class="tl-wrap">
+      <label class="tl-item"><input type="checkbox"/> PEMBERSIHAN</label>
+      <label class="tl-item"><input type="checkbox"/> PERBAIKAN</label>
+      <label class="tl-item"><input type="checkbox"/> PENGGANTIAN</label>
+    </div>
+  </div>
+
+  <div class="sign-wrap">
+    <div class="sign-header">DI KETAHUI OLEH :</div>
+    <div class="sign-grid">
+      <div class="sign-col"><div class="sign-role">USER</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">HEAD DEPT.USER</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">TEKNISI</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">IT HEAD DEPARTEMEN</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<script src="../assets/form.js"></script>
+<script>
+(function() {
+  const groups = [
+    ["A", "REPITER",     ["ANTENA","CONNECTOR","KABEL","MODULASI","KALIBRASI"]],
+    ["B", "HANDY TALKY", ["FUNGSI TOMBOL PTT","SET FREKUENSI","BATERAI","CHARGER","ANTENA"]],
+    ["C", "RADIO RIG",   ["ARUS VOLT","ANTENA","KALIBRASI"]]
+  ];
+  const body = document.getElementById("radio-hwBody");
+  let rowId = 0;
+  groups.forEach(g => {
+    const [code, name, items] = g;
+    const hd = document.createElement("tr");
+    hd.innerHTML = `<td class="tc-center"><b>${code}</b></td><td colspan="4" style="padding-left:6px"><b>${name}</b></td>`;
+    body.appendChild(hd);
+    items.forEach((item, i) => {
+      rowId++;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="tc-center">${i+1}</td>
+        <td style="padding-left:6px">${item}</td>
+        <td class="tc-center"><input type="checkbox" class="hw-cb" data-row="${rowId}"/></td>
+        <td class="tc-center"><input type="checkbox" class="hw-cb" data-row="${rowId}"/></td>
+        <td><input type="text"/></td>
+      `;
+      body.appendChild(tr);
+    });
+  });
+
+  document.getElementById("radio-hwTable").addEventListener("change", e => {
+    if (!e.target.classList.contains("hw-cb")) return;
+    const row = e.target.dataset.row;
+    const cbs = document.querySelectorAll(`#radio-hwTable .hw-cb[data-row="${row}"]`);
+    if (e.target.checked) cbs.forEach(c => { if (c !== e.target) c.checked = false; });
+  });
+})();
+</script>
+</body>
+</html>

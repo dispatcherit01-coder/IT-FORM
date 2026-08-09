@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=860, user-scalable=yes, minimum-scale=0.2, maximum-scale=10"/>
+<title>Form Report Maintenance Printer</title>
+<link rel="stylesheet" href="../assets/form.css"/>
+</head>
+<body>
+<div class="sheet">
+  <div class="form-outer">
+  <table class="header-table">
+  <tr>
+    <td class="cell-logo">
+      <div class="logo-wrap">
+        <img class="logo-img" src="https://lh3.googleusercontent.com/d/1-d2Km1jPqMdssikTLrKGc7q7m0qToqKb" onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1-d2Km1jPqMdssikTLrKGc7q7m0qToqKb'" alt="IMIP Logo"/>
+      </div>
+    </td>
+    <td class="cell-title">FORM PREVENTIVE MAINTENANCE PRINTER</td>
+    <td class="cell-meta">
+      <table class="meta-table">
+        <tr><td>No. Dokumen</td><td class="meta-val">: IMIP-<input type="text" style="width:50px"/></td></tr>
+        <tr><td>Tanggal Efektif</td><td class="meta-val">: <input type="text" style="width:78px"/></td></tr>
+        <tr><td>Revisi</td><td class="meta-val">: <input type="text" style="width:40px" value="0"/></td></tr>
+        <tr><td>&nbsp;</td><td class="meta-val"></td></tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+
+  <table class="info-outer">
+  <tr>
+    <td>
+      <table class="info-inner">
+        <tr><td class="lbl">Merek/Type</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">S/N</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Nomor Asset</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Departement</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr style="border-bottom:none"><td class="lbl">Lokasi</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+      </table>
+    </td>
+    <td>
+      <table class="info-inner">
+        <tr><td class="lbl">Nama Teknisi</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Periode Maintenance</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">&nbsp;</td><td class="sep"></td><td class="val"></td></tr>
+        <tr><td class="lbl">&nbsp;</td><td class="sep"></td><td class="val"></td></tr>
+        <tr style="border-bottom:none"><td class="lbl">&nbsp;</td><td class="sep"></td><td class="val"></td></tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+
+  <table class="tbl tbl-fixed" id="printer-hwTable">
+  <colgroup>
+    <col class="c-no"/><col class="c-item"/><col class="c-cond"/><col class="c-cond"/><col class="c-tindak"/><col class="c-saran"/>
+  </colgroup>
+  <thead>
+    <tr>
+      <th rowspan="2" class="tc-center">&nbsp;</th>
+      <th rowspan="2" style="text-align:left; padding-left:6px">HARDWARE CHECKING</th>
+      <th colspan="2" class="tc-center">KONDISI</th>
+      <th rowspan="2">TINDAK LANJUT</th>
+      <th rowspan="2">SARAN &amp; KETERANGAN</th>
+    </tr>
+    <tr><th class="tc-center">NORMAL</th><th class="tc-center">RUSAK</th></tr>
+  </thead>
+  <tbody id="printer-hwBody"></tbody>
+  </table>
+
+  <div class="section-gap"></div>
+
+  <table class="tbl tbl-fixed" id="printer-scanTable" style="border-top:1px solid #000">
+  <colgroup>
+    <col class="c-no"/><col class="c-item"/><col class="c-cond"/><col class="c-cond"/><col class="c-tindak"/><col class="c-saran"/>
+  </colgroup>
+  <thead>
+    <tr>
+      <th rowspan="2" class="tc-center">&nbsp;</th>
+      <th rowspan="2" style="text-align:left; padding-left:6px">SCANNER DRIVER CHECKING (JIKA ADA)</th>
+      <th colspan="2" class="tc-center">KONDISI</th>
+      <th rowspan="2">TINDAK LANJUT</th>
+      <th rowspan="2">SARAN &amp; KETERANGAN</th>
+    </tr>
+    <tr><th class="tc-center">NORMAL</th><th class="tc-center">RUSAK</th></tr>
+  </thead>
+  <tbody id="printer-scanBody"></tbody>
+  </table>
+
+  <div class="section-gap"></div>
+
+  <table class="tbl" id="printer-swTable" style="border-top:1px solid #000; table-layout:fixed;">
+  <colgroup>
+    <col class="c-sw-no"/><col class="c-sw-item"/><col class="c-sw-saran"/>
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tc-center">&nbsp;</th>
+      <th style="text-align:left; padding-left:6px">SOFTWARE CHECKING</th>
+      <th class="tc-center">SARAN &amp; KETERANGAN</th>
+    </tr>
+  </thead>
+  <tbody id="printer-swBody"></tbody>
+  </table>
+
+  <div class="box" style="min-height:52px">
+    <div class="box-title">KETERANGAN UMUM :</div>
+    <textarea class="ket-area" rows="3"></textarea>
+  </div>
+
+  <div class="box" style="min-height:56px">
+    <div class="box-title">TINDAK LANJUT :</div>
+    <div class="tl-wrap">
+      <label class="tl-item"><input type="checkbox"/> PEMBERSIHAN</label>
+      <label class="tl-item"><input type="checkbox"/> PERBAIKAN</label>
+      <label class="tl-item"><input type="checkbox"/> PENGGANTIAN</label>
+    </div>
+  </div>
+
+  <div class="sign-wrap">
+    <div class="sign-header">DI KETAHUI OLEH :</div>
+    <div class="sign-grid">
+      <div class="sign-col"><div class="sign-role">USER</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">HEAD DEPT.USER</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">TEKNISI</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">IT HEAD DEPARTEMEN</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<script src="../assets/form.js"></script>
+<script>
+(function() {
+  const hwItems = ["PRINT HEAD","ROLLER ATAS","ROLLER BAWAH","VETICAL ENCODER","HORIZONTAL ENCODER","TIMING BELT","KAPASITAS BOX TINTA","PUMP / PARGE UNIT","MAINTENANCE BOX"];
+  const hwBody = document.getElementById("printer-hwBody");
+  hwItems.forEach((name, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="tc-center">${i+1}</td>
+      <td style="padding-left:6px">${name}</td>
+      <td class="tc-center"><input type="checkbox" class="hw-cb" data-row="${i}"/></td>
+      <td class="tc-center"><input type="checkbox" class="hw-cb" data-row="${i}"/></td>
+      <td><input type="text"/></td>
+      <td><input type="text"/></td>
+    `;
+    hwBody.appendChild(tr);
+  });
+
+  document.getElementById("printer-hwTable").addEventListener("change", e => {
+    if (!e.target.classList.contains("hw-cb")) return;
+    const row = e.target.dataset.row;
+    const cbs = document.querySelectorAll(`#printer-hwTable .hw-cb[data-row="${row}"]`);
+    if (e.target.checked) cbs.forEach(c => { if (c !== e.target) c.checked = false; });
+  });
+
+  const scanItems = ["SCANNER GLASS","ADF DRIVER","ADF SCAN STRIP"];
+  const scanBody = document.getElementById("printer-scanBody");
+  scanItems.forEach((name, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="tc-center">${i+1}</td>
+      <td style="padding-left:6px">${name}</td>
+      <td class="tc-center"><input type="checkbox" class="scan-cb" data-row="${i}"/></td>
+      <td class="tc-center"><input type="checkbox" class="scan-cb" data-row="${i}"/></td>
+      <td><input type="text"/></td>
+      <td><input type="text"/></td>
+    `;
+    scanBody.appendChild(tr);
+  });
+
+  document.getElementById("printer-scanTable").addEventListener("change", e => {
+    if (!e.target.classList.contains("scan-cb")) return;
+    const row = e.target.dataset.row;
+    const cbs = document.querySelectorAll(`#printer-scanTable .scan-cb[data-row="${row}"]`);
+    if (e.target.checked) cbs.forEach(c => { if (c !== e.target) c.checked = false; });
+  });
+
+  const swItems = ["PEMBERIAN NOMOR ASSET","NAMA PRINTER","IP PRINTER","KAPASITAS TINTA","WASTE INK PAD (JIKA PERLU)","UPDATE FIRMWARE"];
+  const swBody = document.getElementById("printer-swBody");
+  swItems.forEach((name, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="tc-center">${i+1}</td>
+      <td style="padding-left:6px">${name}</td>
+      <td><input type="text"/></td>
+    `;
+    swBody.appendChild(tr);
+  });
+})();
+</script>
+</body>
+</html>

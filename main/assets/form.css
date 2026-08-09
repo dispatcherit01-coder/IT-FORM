@@ -1,0 +1,250 @@
+/* ══════════════════════════════════
+   SHARED FORM STYLES — Arial 12 (isi), Arial 18 (judul), border 1px
+══════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }   /* cegah browser mobile mengubah ukuran teks sendiri */
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  background: #d0d0d0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0 50px;
+  gap: 14px;
+  touch-action: manipulation;   /* scroll + pinch-zoom bebas, hilangkan delay tap */
+}
+
+.sheet {
+  width: 794px;
+  background: #fff;
+  padding: 18px 20px 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.35);
+}
+
+input[type=text], input[type=date], textarea {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  width: 100%;
+  color: #000;
+}
+textarea { resize: none; }
+
+input[type=checkbox] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 14px; height: 14px;
+  border: 1px solid #000;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  flex-shrink: 0;
+}
+input[type=checkbox]:checked::after {
+  content: '✓';
+  font-size: 12px;
+  position: absolute;
+  top: -2px; left: 1px;
+  color: #000;
+  font-weight: 700;
+}
+
+.header-table { width: 100%; border-collapse: collapse; border: 1px solid #000; margin-bottom: 0; }
+.header-table td { border: 1px solid #000; vertical-align: middle; }
+
+.cell-logo { width: 205px; padding: 6px 8px; }
+.logo-wrap { display: flex; align-items: center; gap: 5px; }
+.logo-img { width: 190px; height: 50px; object-fit: contain; flex-shrink: 0; display: block; }
+
+/* ── JUDUL : Arial 18 ── */
+.cell-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 6px 4px;
+  letter-spacing: .2px;
+  line-height: 1.2;
+}
+
+.cell-meta { width: 212px; padding: 0; }
+.meta-table { width: 100%; border-collapse: collapse; }
+.meta-table tr { border-bottom: 1px solid #000; }
+.meta-table tr:last-child { border-bottom: none; }
+.meta-table td { padding: 3px 5px; font-size: 12px; border: none; white-space: nowrap; overflow: hidden; }
+.meta-table td:first-child { width: 96px; }
+.meta-table .meta-val { border-left: 1px solid #000; width: 116px; }
+.meta-table input { font-size: 12px; }
+
+.info-outer { width: 100%; border-collapse: collapse; border: 1px solid #000; border-top: none; margin-bottom: 0; }
+.info-outer td { border: 1px solid #000; padding: 0; vertical-align: top; }
+.info-outer td:first-child { width: 50%; }
+.info-outer td:last-child  { border-right: none; }
+
+.info-inner { width: 100%; border-collapse: collapse; }
+.info-inner tr { border-bottom: 1px solid #bbb; }
+.info-inner tr:last-child { border-bottom: 1px solid #bbb; }
+.info-inner td { padding: 4px 6px; font-size: 12px; border: none; }
+.info-inner .lbl { width: 145px; white-space: nowrap; }
+.info-inner .sep { width: 10px; }
+.info-inner .val input { font-size: 12px; }
+
+.tbl { width: 100%; border-collapse: collapse; border: 1px solid #000; border-top: none; }
+.tbl th, .tbl td { border: 1px solid #000; padding: 4px 5px; font-size: 12px; vertical-align: middle; }
+.tbl th { background: #fff; font-weight: 700; text-align: center; }
+
+.tbl-fixed { table-layout: fixed; }
+.c-no     { width: 3.45%; }
+.c-item   { width: 36.50%; }
+.c-cond   { width: 8.00%; }
+.c-tindak { width: 20.00%; }
+.c-saran  { width: 24.05%; }
+.tc-center { text-align: center; }
+
+.c-sw-no     { width: 3.45%; }
+.c-sw-item   { width: 38.19%; }
+.c-sw-saran  { width: 58.36%; }
+
+.sign-name-wrap { width: 92%; display: flex; align-items: flex-end; gap: 0; }
+.sign-name-wrap .sp { font-size: 12px; line-height: 1; flex-shrink: 0; padding-bottom: 1px; }
+.sign-input {
+  flex: 1;
+  border: none !important;
+  border-bottom: 1px solid #000 !important;
+  outline: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  text-align: center;
+  background: transparent;
+  color: #000;
+  padding: 0 2px 2px;
+  height: 18px;
+  min-width: 0;
+}
+
+.spacer-row td {
+  height: 9px; padding: 0;
+  border-left: 1px solid #000; border-right: 1px solid #000;
+  border-top: none; border-bottom: none;
+  background: #fff;
+}
+
+.box { border: 1px solid #000; border-top: none; padding: 5px 8px; }
+.box-title { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+.box-content { font-size: 12px; }
+.ket-area { width: 100%; min-height: 38px; font-size: 12px; }
+
+.tl-wrap { padding-left: 90px; display: flex; flex-direction: column; gap: 2px; margin-top: 2px; }
+.tl-item { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; }
+
+.sign-wrap { border: 1px solid #000; border-top: none; }
+.sign-header { background: #fff; font-weight: 700; font-size: 12px; text-align: center; padding: 3px; border-bottom: 1px solid #000; }
+.sign-grid { display: grid; grid-template-columns: repeat(4,1fr); }
+.sign-col { padding: 5px 6px 12px; text-align: center; border-right: 1px solid #000; min-height: 88px; display: flex; flex-direction: column; align-items: center; }
+.sign-col:last-child { border-right: none; }
+.sign-role { font-size: 12px; font-weight: 700; }
+.sign-space { flex: 1; }
+
+.section-gap { height: 9px; background: #fff; border-left: 1px solid #000; border-right: 1px solid #000; }
+
+.form-outer { border: 1px solid #000; }
+.form-outer .header-table                { border: none !important; border-bottom: 1px solid #000 !important; }
+.form-outer .header-table td             { border-top: none !important; }
+.form-outer .header-table td:first-child { border-left: none !important; }
+.form-outer .header-table td:last-child  { border-right: none !important; }
+.form-outer .info-outer                  { border-left: none !important; border-right: none !important; }
+.form-outer .info-outer td:first-child   { border-left: none !important; }
+.form-outer .info-outer td:last-child    { border-right: none !important; }
+.form-outer .tbl                                                 { border-left: none !important; border-right: none !important; }
+.form-outer .tbl th:first-child, .form-outer .tbl td:first-child { border-left: none !important; }
+.form-outer .tbl th:last-child,  .form-outer .tbl td:last-child  { border-right: none !important; }
+.form-outer .spacer-row td { border-left: none !important; border-right: none !important; }
+.form-outer .box { border-left: none !important; border-right: none !important; }
+.form-outer .sign-wrap { border-left: none !important; border-right: none !important; border-bottom: none !important; }
+
+/* ══════════════════════════════════
+   TAMBAHAN — FORM PENGAJUAN (other/)
+══════════════════════════════════ */
+.info-single { width: 100%; border-collapse: collapse; border: 1px solid #000; border-top: none; }
+.info-single tr { border-bottom: 1px solid #bbb; }
+.info-single tr:last-child { border-bottom: none; }
+.info-single td { padding: 4px 6px; font-size: 12px; border: none; vertical-align: top; }
+.info-single .lbl { width: 210px; white-space: nowrap; }
+.info-single .sep { width: 10px; }
+
+.cb-wrap { display: flex; flex-direction: column; gap: 2px; }
+.cb-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+.cb-inline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-size: 12px; }
+
+.note-list { padding-left: 22px; font-size: 12px; display: flex; flex-direction: column; gap: 3px; }
+
+.form-outer .info-single { border-left: none !important; border-right: none !important; }
+
+/* ══════════════════════════════════
+   TAMBAHAN — FORM CHECKLIST
+══════════════════════════════════ */
+.sec-head {
+  border: 1px solid #000;
+  border-top: none;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  background: #fff;
+}
+.form-outer .sec-head { border-left: none !important; border-right: none !important; }
+
+.inner-plain { width: 100%; border-collapse: collapse; }
+.inner-plain td { padding: 3px 6px; font-size: 12px; border: none; vertical-align: middle; }
+.inner-plain .lbl { width: 130px; white-space: nowrap; }
+.inner-plain .sep { width: 10px; }
+
+.grid-2col { width: 100%; border-collapse: collapse; }
+.grid-2col td { padding: 2px 4px; font-size: 12px; }
+.grid-2col .gap { width: 20px; }
+
+.lbl.wrap { white-space: normal !important; }
+.ta-bordered {
+  border: 1px solid #000 !important;
+  background: #fff;
+  min-height: 34px;
+  width: 100%;
+  padding: 3px 5px;
+  margin: 2px 0 6px;
+  font-size: 12px;
+  resize: none;
+}
+.note-cell { font-weight: 400; font-size: 12px; }
+
+/* (rule .u-input dihapus — input Aplikasi Tambahan kini polos tanpa garis bawah) */
+
+@media print {
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  html, body {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 0 !important;
+  }
+
+  .sheet { width: 100% !important; padding: 0 !important; box-shadow: none !important; margin: 0 !important; }
+  .form-outer { border: 1px solid #000 !important; }
+
+  /* ── data yang diinput tercetak penuh, tidak terpotong ── */
+  input { overflow: visible !important; }
+  textarea { overflow: hidden !important; }   /* tinggi mengikuti auto-expand (inline) */
+
+  /* ── multi-halaman: header tabel berulang, baris/box tidak terpotong antar halaman ── */
+  thead { display: table-header-group; }
+  tr, .box, .sec-head, .sign-wrap { page-break-inside: avoid; }
+
+  @page { size: A4 portrait; margin: 8mm; }
+}

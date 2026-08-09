@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=860, user-scalable=yes, minimum-scale=0.2, maximum-scale=10"/>
+<title>Form Report Maintenance PC / Laptop</title>
+<link rel="stylesheet" href="../assets/form.css"/>
+</head>
+<body>
+<div class="sheet">
+  <div class="form-outer">
+  <table class="header-table">
+  <tr>
+    <td class="cell-logo">
+      <div class="logo-wrap">
+        <img class="logo-img" src="https://lh3.googleusercontent.com/d/1-d2Km1jPqMdssikTLrKGc7q7m0qToqKb" onerror="this.onerror=null;this.src='https://drive.google.com/uc?export=view&id=1-d2Km1jPqMdssikTLrKGc7q7m0qToqKb'" alt="IMIP Logo"/>
+      </div>
+    </td>
+    <td class="cell-title">FORM PREVENTIVE MAINTENANCE PERSONAL COMPUTER / LAPTOP</td>
+    <td class="cell-meta">
+      <table class="meta-table">
+        <tr><td>No. Dokumen</td><td class="meta-val">: IMIP-<input type="text" style="width:50px"/></td></tr>
+        <tr><td>Tanggal Efektif</td><td class="meta-val">: <input type="text" style="width:78px"/></td></tr>
+        <tr><td>Revisi</td><td class="meta-val">: <input type="text" style="width:40px" value="0"/></td></tr>
+        <tr><td>&nbsp;</td><td class="meta-val"></td></tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+
+  <table class="info-outer">
+  <tr>
+    <td>
+      <table class="info-inner">
+        <tr><td class="lbl">NIK User</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Nama User</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Nomor Asset</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Departement</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr style="border-bottom:none"><td class="lbl">Lokasi</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+      </table>
+    </td>
+    <td>
+      <table class="info-inner">
+        <tr><td class="lbl">Nama Teknisi</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">Periode Maintenance</td><td class="sep">:</td><td class="val"><input type="text"/></td></tr>
+        <tr><td class="lbl">&nbsp;</td><td class="sep"></td><td class="val"></td></tr>
+        <tr><td class="lbl">&nbsp;</td><td class="sep"></td><td class="val"></td></tr>
+        <tr style="border-bottom:none"><td class="lbl">&nbsp;</td><td class="sep"></td><td class="val"></td></tr>
+      </table>
+    </td>
+  </tr>
+  </table>
+
+  <table class="tbl tbl-fixed" id="pc-hwTable">
+  <colgroup>
+    <col class="c-no"/><col class="c-item"/><col class="c-cond"/><col class="c-cond"/><col class="c-tindak"/><col class="c-saran"/>
+  </colgroup>
+  <thead>
+    <tr>
+      <th rowspan="2" class="tc-center">&nbsp;</th>
+      <th rowspan="2" style="text-align:left; padding-left:6px">HARDWARE CHECKING</th>
+      <th colspan="2" class="tc-center">KONDISI</th>
+      <th rowspan="2">TINDAK LANJUT</th>
+      <th rowspan="2">SARAN &amp; KETERANGAN</th>
+    </tr>
+    <tr><th class="tc-center">NORMAL</th><th class="tc-center">RUSAK</th></tr>
+  </thead>
+  <tbody></tbody>
+  </table>
+
+  <div class="section-gap"></div>
+
+  <table class="tbl tbl-fixed" id="pc-swTable" style="border-top:1px solid #000">
+  <colgroup>
+    <col class="c-no"/><col class="c-item"/><col class="c-cond"/><col class="c-cond"/><col class="c-tindak"/><col class="c-saran"/>
+  </colgroup>
+  <thead>
+    <tr>
+      <th class="tc-center">&nbsp;</th>
+      <th style="text-align:left; padding-left:6px">SOFTWARE CHECKING, CLEANING, &amp; OPTIMIZED</th>
+      <th class="tc-center">STATUS</th>
+      <th colspan="3" class="tc-center">SARAN &amp; KETERANGAN</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+  </table>
+
+  <div class="box" style="min-height:52px">
+    <div class="box-title">KETERANGAN UMUM :</div>
+    <textarea class="ket-area" rows="3"></textarea>
+  </div>
+
+  <div class="box" style="min-height:56px">
+    <div class="box-title">TINDAK LANJUT :</div>
+    <div class="tl-wrap">
+      <label class="tl-item"><input type="checkbox"/> PEMBERSIHAN</label>
+      <label class="tl-item"><input type="checkbox"/> PERBAIKAN</label>
+      <label class="tl-item"><input type="checkbox"/> PENGGANTIAN</label>
+    </div>
+  </div>
+
+  <div class="sign-wrap">
+    <div class="sign-header">DI KETAHUI OLEH :</div>
+    <div class="sign-grid">
+      <div class="sign-col"><div class="sign-role">USER</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">HEAD DEPT.USER</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">TEKNISI</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">IT HEAD DEPARTEMEN</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<script src="../assets/form.js"></script>
+<script>
+(function() {
+  const hwItems = ["MAINBOARD","PROCESSOR & PASTA","FAN","RAM","VGA","PSU","MOUSE","KEYBAORD","MONITOR","LCD","TOUCH PAD","CHARGER"];
+  const hwBody = document.querySelector("#pc-hwTable tbody");
+  hwItems.forEach((name, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="tc-center">${i+1}</td>
+      <td style="padding-left:6px">${name}</td>
+      <td class="tc-center"><input type="checkbox" class="hw-cb" data-row="${i}"/></td>
+      <td class="tc-center"><input type="checkbox" class="hw-cb" data-row="${i}"/></td>
+      <td><input type="text"/></td>
+      <td><input type="text"/></td>
+    `;
+    hwBody.appendChild(tr);
+  });
+
+  document.getElementById("pc-hwTable").addEventListener("change", e => {
+    if (!e.target.classList.contains("hw-cb")) return;
+    const row = e.target.dataset.row;
+    const cbs = document.querySelectorAll(`#pc-hwTable .hw-cb[data-row="${row}"]`);
+    if (e.target.checked) cbs.forEach(c => { if (c !== e.target) c.checked = false; });
+  });
+
+  const swGroups = [
+    ["JOIN AD","CEK AKTIVASI WINDOWS","CEK AKTIVASI OFFICE","CEK APLIKASI STANDART","CEK KAPASITAS EMAIL (OUTLOOK) %","CEK UKURAN FILE PST (OUTLOOK) GB"],
+    ["HAPUS FILE COOKIES","HAPUS TEMP (WINDOWS/PROFIL)","HAPUS RECYCLE BIN"],
+    ["OPTIMALKAN SYSTEM BOOT","OPTIMALKAN HARD DISK/SSD"]
+  ];
+
+  const swBody = document.querySelector("#pc-swTable tbody");
+  let idx = 0;
+  swGroups.forEach((group, gi) => {
+    group.forEach(name => {
+      idx++;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="tc-center">${idx}</td>
+        <td style="padding-left:6px">${name}</td>
+        <td class="tc-center"><input type="checkbox"/></td>
+        <td colspan="3"><input type="text"/></td>
+      `;
+      swBody.appendChild(tr);
+    });
+    if (gi < swGroups.length - 1) {
+      const sp = document.createElement("tr");
+      sp.className = "spacer-row";
+      sp.innerHTML = "<td colspan='6'></td>";
+      swBody.appendChild(sp);
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=860, user-scalable=yes, minimum-scale=0.2, maximum-scale=10"/>
+<title>Form Report Maintenance - IMIP</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  background: #d0d0d0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0 50px;
+  gap: 14px;
+}
+
+/* ── TOOLBAR UTAMA ── */
+.toolbar {
+  width: 834px;
+  max-width: 98%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: #424242;
+  padding: 10px 14px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+.select-wrap { display: flex; align-items: center; gap: 8px; }
+.select-wrap label { color: #fff; font-weight: 700; font-size: 12px; white-space: nowrap; }
+.select-wrap select {
+  font: 700 12px Arial, sans-serif;
+  padding: 8px 10px;
+  min-width: 230px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  outline: none;
+}
+.actions { display: flex; align-items: center; gap: 10px; }
+.actions button {
+  padding: 9px 22px;
+  font: 700 12px Arial, sans-serif;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  letter-spacing: .3px;
+}
+.btn-print { background: #b71c1c; color: #fff; }
+.btn-print:hover { background: #941616; }
+.btn-reset { background: #757575; color: #fff; }
+.btn-reset:hover { background: #616161; }
+
+/* ── SPINNER ── */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner {
+  width: 16px; height: 16px;
+  border: 3px solid rgba(255,255,255,.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  display: inline-block;
+}
+.spinner[hidden] { display: none; }
+
+/* ── AREA IFRAME + OVERLAY LOADING ── */
+.frame-wrap { position: relative; }
+#formFrame {
+  width: 834px;
+  max-width: 98vw;
+  height: 1150px;
+  border: none;
+  background: #d0d0d0;
+  display: block;
+}
+.overlay {
+  position: absolute; inset: 0;
+  background: rgba(208,208,208,.8);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px; z-index: 5;
+}
+.overlay[hidden] { display: none; }
+.big-spinner {
+  width: 46px; height: 46px;
+  border: 5px solid #bbb;
+  border-top-color: #b71c1c;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+.overlay-text { font-weight: 700; color: #424242; font-size: 12px; letter-spacing: .3px; }
+
+@media print { .toolbar { display: none !important; } }
+</style>
+</head>
+<body>
+
+<!-- ══ MAIN UI : DROPDOWN + SPINNER + CETAK/SAVE PDF ══ -->
+<div class="toolbar">
+  <div class="select-wrap">
+    <label for="formSelect">Pilih Form :</label>
+    <select id="formSelect">
+      <optgroup label="Maintenance">
+        <option value="maintenance/pc_laptop.html" selected>PC / Laptop</option>
+        <option value="maintenance/printer.html">Printer</option>
+        <option value="maintenance/ups.html">UPS</option>
+        <option value="maintenance/radio_rig.html">Radio Rig</option>
+        <option value="maintenance/checklist_pc_laptop.html">Checklist PC / Laptop</option>
+      </optgroup>
+      <optgroup label="Other">
+        <option value="other/peminjaman_barang.html">Peminjaman Barang</option>
+        <option value="other/user_nas.html">Pengajuan User Acces Storge Server (NAS)</option>
+        <option value="other/byod.html">Pengajuan BYOD (Bring Your Own Device)</option>
+        <option value="other/install_software.html">Pengajuan Install Software</option>
+        <option value="other/recovery_data.html">Recovery Data Users</option>
+        <option value="other/registrasi_operator_drone.html">Registrasi Operator Drone</option>
+        <option value="other/registrasi_perangkat_drone.html">Registrasi Perangkat Drone</option>
+        <option value="other/pengajuan_id_user_ad.html">Pengajuan ID User AD</option>
+      </optgroup>
+    </select>
+    <span id="spinner" class="spinner" hidden></span>
+  </div>
+  <div class="actions">
+    <button id="btnPrint" class="btn-print">🖨 &nbsp;Cetak / Save PDF</button>
+    <button id="btnReset" class="btn-reset">↺ &nbsp;Reset Form</button>
+  </div>
+</div>
+
+<!-- ══ CONTAINER SUB LAYOUT ══ -->
+<div class="frame-wrap">
+  <div id="overlay" class="overlay">
+    <div class="big-spinner"></div>
+    <div class="overlay-text">Memuat form…</div>
+  </div>
+  <iframe id="formFrame" src="maintenance/pc_laptop.html"></iframe>
+</div>
+
+<script>
+const frame   = document.getElementById('formFrame');
+const select  = document.getElementById('formSelect');
+const spinner = document.getElementById('spinner');
+const overlay = document.getElementById('overlay');
+
+function showLoading(){ spinner.hidden = false; overlay.hidden = false; }
+function hideLoading(){ spinner.hidden = true;  overlay.hidden = true;  }
+
+/* ganti form dari dropdown → tampilkan spinner */
+select.addEventListener('change', () => {
+  if (!select.value) return;
+  showLoading();
+  frame.src = select.value;
+});
+
+/* fallback: sembunyikan spinner saat iframe selesai load */
+frame.addEventListener('load', hideLoading);
+
+/* pesan dari sub-layout: form siap + tinggi konten */
+window.addEventListener('message', (e) => {
+  const d = e.data || {};
+  if (d.type === 'form-ready') {
+    hideLoading();
+    if (d.height) frame.style.height = d.height + 'px';
+  }
+});
+
+/* tombol utama → kirim perintah ke sub-layout */
+document.getElementById('btnPrint').addEventListener('click', () => {
+  if (!overlay.hidden) { alert('Form masih dimuat, silakan tunggu sebentar.'); return; }
+  frame.contentWindow.postMessage({ type: 'form-print' }, '*');
+});
+
+document.getElementById('btnReset').addEventListener('click', () => {
+  const nama = select.options[select.selectedIndex].text;
+  frame.contentWindow.postMessage({ type: 'form-reset', msg: 'Reset semua isian form ' + nama + '?' }, '*');
+});
+</script>
+</body>
+</html>
