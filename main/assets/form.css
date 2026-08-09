@@ -1,9 +1,10 @@
 /* ══════════════════════════════════
    SHARED FORM STYLES — Arial 12 (isi), Arial 18 (judul), border 1px
+   Margin cetak NARROW (5mm) — tabel lebih lebar & terlihat
 ══════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { -webkit-text-size-adjust: 100%; }   /* cegah browser mobile mengubah ukuran teks sendiri */
+html { -webkit-text-size-adjust: 100%; }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -14,13 +15,13 @@ body {
   align-items: center;
   padding: 20px 0 50px;
   gap: 14px;
-  touch-action: manipulation;   /* scroll + pinch-zoom bebas, hilangkan delay tap */
+  touch-action: manipulation;
 }
 
 .sheet {
   width: 794px;
   background: #fff;
-  padding: 18px 20px 20px;
+  padding: 14px 14px 16px;
   box-shadow: 0 2px 12px rgba(0,0,0,.35);
 }
 
@@ -58,9 +59,10 @@ input[type=checkbox]:checked::after {
 .header-table { width: 100%; border-collapse: collapse; border: 1px solid #000; margin-bottom: 0; }
 .header-table td { border: 1px solid #000; vertical-align: middle; }
 
-.cell-logo { width: 205px; padding: 6px 8px; }
+/* ── LOGO : ukuran disesuaikan ── */
+.cell-logo { width: 215px; padding: 6px 8px; }
 .logo-wrap { display: flex; align-items: center; gap: 5px; }
-.logo-img { width: 190px; height: 50px; object-fit: contain; flex-shrink: 0; display: block; }
+.logo-img { width: 200px; height: 57px; object-fit: contain; flex-shrink: 0; display: block; }
 
 /* ── JUDUL : Arial 18 ── */
 .cell-title {
@@ -98,17 +100,18 @@ input[type=checkbox]:checked::after {
 .tbl th, .tbl td { border: 1px solid #000; padding: 4px 5px; font-size: 12px; vertical-align: middle; }
 .tbl th { background: #fff; font-weight: 700; text-align: center; }
 
+/* ── lebar kolom presisi (total = 100%) ── */
 .tbl-fixed { table-layout: fixed; }
-.c-no     { width: 3.45%; }
-.c-item   { width: 36.50%; }
-.c-cond   { width: 8.00%; }
-.c-tindak { width: 20.00%; }
-.c-saran  { width: 24.05%; }
+.c-no     { width: 4%; }
+.c-item   { width: 37%; }
+.c-cond   { width: 7.5%; }
+.c-tindak { width: 20%; }
+.c-saran  { width: 24%; }
 .tc-center { text-align: center; }
 
-.c-sw-no     { width: 3.45%; }
-.c-sw-item   { width: 38.19%; }
-.c-sw-saran  { width: 58.36%; }
+.c-sw-no     { width: 4%; }
+.c-sw-item   { width: 38%; }
+.c-sw-saran  { width: 58%; }
 
 .sign-name-wrap { width: 92%; display: flex; align-items: flex-end; gap: 0; }
 .sign-name-wrap .sp { font-size: 12px; line-height: 1; flex-shrink: 0; padding-bottom: 1px; }
@@ -207,7 +210,10 @@ input[type=checkbox]:checked::after {
 .grid-2col td { padding: 2px 4px; font-size: 12px; }
 .grid-2col .gap { width: 20px; }
 
+/* label panjang (bilingual) boleh melipat */
 .lbl.wrap { white-space: normal !important; }
+
+/* textarea manual ber-border + jarak bawah (selalu tampil) */
 .ta-bordered {
   border: 1px solid #000 !important;
   background: #fff;
@@ -218,10 +224,13 @@ input[type=checkbox]:checked::after {
   font-size: 12px;
   resize: none;
 }
+
+/* catatan asterisk (*) tampil sebagai teks sejajar baris label */
 .note-cell { font-weight: 400; font-size: 12px; }
 
-/* (rule .u-input dihapus — input Aplikasi Tambahan kini polos tanpa garis bawah) */
-
+/* ══════════════════════════════════
+   PRINT — WYSIWYG, data lengkap, multi-halaman, MARGIN NARROW
+══════════════════════════════════ */
 @media print {
   * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
 
@@ -238,13 +247,11 @@ input[type=checkbox]:checked::after {
   .sheet { width: 100% !important; padding: 0 !important; box-shadow: none !important; margin: 0 !important; }
   .form-outer { border: 1px solid #000 !important; }
 
-  /* ── data yang diinput tercetak penuh, tidak terpotong ── */
   input { overflow: visible !important; }
-  textarea { overflow: hidden !important; }   /* tinggi mengikuti auto-expand (inline) */
+  textarea { overflow: hidden !important; }
 
-  /* ── multi-halaman: header tabel berulang, baris/box tidak terpotong antar halaman ── */
   thead { display: table-header-group; }
   tr, .box, .sec-head, .sign-wrap { page-break-inside: avoid; }
 
-  @page { size: A4 portrait; margin: 8mm; }
+  @page { size: A4 portrait; margin: 5mm; }   /* narrow margin */
 }
