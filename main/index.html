@@ -2,16 +2,10 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8"/>
-<!-- Lebar viewport = lebar layout → di Android muat penuh, cubit untuk zoom -->
 <meta name="viewport" content="width=860, user-scalable=yes, minimum-scale=0.2, maximum-scale=10"/>
 <title>Form Report Maintenance - IMIP</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html, body {
-  overflow-x: auto;
-  -webkit-text-size-adjust: 100%;
-}
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -22,12 +16,12 @@ body {
   align-items: center;
   padding: 20px 0 50px;
   gap: 14px;
-  touch-action: manipulation;
 }
 
 /* ── TOOLBAR UTAMA ── */
 .toolbar {
   width: 834px;
+  max-width: 98%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,7 +30,6 @@ body {
   padding: 10px 14px;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0,0,0,.3);
-  flex-wrap: wrap;
 }
 .select-wrap { display: flex; align-items: center; gap: 8px; }
 .select-wrap label { color: #fff; font-weight: 700; font-size: 12px; white-space: nowrap; }
@@ -51,7 +44,7 @@ body {
   cursor: pointer;
   outline: none;
 }
-.actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.actions { display: flex; align-items: center; gap: 10px; }
 .actions button {
   padding: 9px 22px;
   font: 700 12px Arial, sans-serif;
@@ -64,16 +57,6 @@ body {
 .btn-print:hover { background: #941616; }
 .btn-reset { background: #757575; color: #fff; }
 .btn-reset:hover { background: #616161; }
-.out-select {
-  font: 700 12px Arial, sans-serif;
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background: #fff;
-  color: #000;
-  cursor: pointer;
-  outline: none;
-}
 
 /* ── SPINNER ── */
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -91,6 +74,7 @@ body {
 .frame-wrap { position: relative; }
 #formFrame {
   width: 834px;
+  max-width: 98vw;
   height: 1150px;
   border: none;
   background: #d0d0d0;
@@ -118,7 +102,7 @@ body {
 </head>
 <body>
 
-<!-- ══ MAIN UI : DROPDOWN FORM + DROPDOWN OUTPUT + SPINNER + CETAK/RESET ══ -->
+<!-- ══ MAIN UI : DROPDOWN + SPINNER + CETAK/SAVE PDF ══ -->
 <div class="toolbar">
   <div class="select-wrap">
     <label for="formSelect">Pilih Form :</label>
@@ -139,17 +123,14 @@ body {
         <option value="other/registrasi_operator_drone.html">Registrasi Operator Drone</option>
         <option value="other/registrasi_perangkat_drone.html">Registrasi Perangkat Drone</option>
         <option value="other/pengajuan_id_user_ad.html">Pengajuan ID User AD</option>
+        <option value="other/pengajuan_forward_email.html">Pengajuan Forward Email</option>
+        <option value="other/pengajuan_mailing_list.html">Pengajuan Pendaftaran Mailing List</option>
       </optgroup>
     </select>
     <span id="spinner" class="spinner" hidden></span>
   </div>
   <div class="actions">
-    <select id="outputSelect" class="out-select">
-      <option value="pdf">PDF</option>
-      <option value="word">Word (.doc)</option>
-      <option value="excel">Excel (.xls)</option>
-    </select>
-    <button id="btnPrint" class="btn-print">🖨 &nbsp;Cetak / Save</button>
+    <button id="btnPrint" class="btn-print">🖨 &nbsp;Cetak / Save PDF</button>
     <button id="btnReset" class="btn-reset">↺ &nbsp;Reset Form</button>
   </div>
 </div>
@@ -172,47 +153,31 @@ const overlay = document.getElementById('overlay');
 function showLoading(){ spinner.hidden = false; overlay.hidden = false; }
 function hideLoading(){ spinner.hidden = true;  overlay.hidden = true;  }
 
-/* ganti form → spinner tampil */
+/* ganti form dari dropdown → tampilkan spinner */
 select.addEventListener('change', () => {
   if (!select.value) return;
   showLoading();
   frame.src = select.value;
 });
+
+/* fallback: sembunyikan spinner saat iframe selesai load */
 frame.addEventListener('load', hideLoading);
 
-/* pesan dari sub-layout */
-let printAck = false, exportAck = false;
+/* pesan dari sub-layout: form siap + tinggi konten */
 window.addEventListener('message', (e) => {
   const d = e.data || {};
   if (d.type === 'form-ready') {
     hideLoading();
     if (d.height) frame.style.height = d.height + 'px';
   }
-  if (d.type === 'print-ack')  printAck  = true;
-  if (d.type === 'export-ack') exportAck = true;
 });
 
-/* tombol CETAK / SAVE sesuai pilihan output */
+/* tombol utama → kirim perintah ke sub-layout */
 document.getElementById('btnPrint').addEventListener('click', () => {
   if (!overlay.hidden) { alert('Form masih dimuat, silakan tunggu sebentar.'); return; }
-  const fmt = document.getElementById('outputSelect').value;
-
-  if (fmt === 'pdf') {
-    printAck = false;
-    frame.contentWindow.postMessage({ type: 'form-print' }, '*');
-    setTimeout(() => {                                   // fallback bila form.js tidak termuat
-      if (!printAck) { try { frame.contentWindow.print(); } catch (e) {} }
-    }, 400);
-  } else {
-    exportAck = false;
-    frame.contentWindow.postMessage({ type: 'form-export', format: fmt }, '*');
-    setTimeout(() => {
-      if (!exportAck) alert('Export tidak tersedia: form ini tidak memuat assets/form.js');
-    }, 400);
-  }
+  frame.contentWindow.postMessage({ type: 'form-print' }, '*');
 });
 
-/* tombol RESET */
 document.getElementById('btnReset').addEventListener('click', () => {
   const nama = select.options[select.selectedIndex].text;
   frame.contentWindow.postMessage({ type: 'form-reset', msg: 'Reset semua isian form ' + nama + '?' }, '*');
