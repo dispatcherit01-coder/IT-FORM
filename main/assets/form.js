@@ -28,17 +28,55 @@
   window.addEventListener('resize', sendReady);
 
   /* ── representasi nilai input ── */
-  function inputHtml(el) {
+  function inputHtml(el, mode) {
     if (el.type === 'checkbox')
       return el.checked ? '<b style="font-size:12px">☑</b>' : '<span style="font-size:12px">☐</span>';
     var v = esc(el.value);
-    if (el.classList.contains('sign-input'))
+    if (el.classList.contains('sign-input')) {
+      if (mode === 'word') {
+        /* Word tidak merender border-bottom inline → pakai underline / underscore */
+        return v ? '<span style="text-decoration:underline;">' + v + '</span>'
+                 : '<span>________________________</span>';
+      }
       return '<span style="display:inline-block;width:70%;text-align:center;border-bottom:1px solid #000">' + v + '&nbsp;</span>';
+    }
     return '<span>' + v + '&nbsp;</span>';
   }
 
   /* ── transform flex/grid → tabel ── */
-  function transformClone(root) {
+  function transformClone(root, mode) {
+    root.querySelectorAll('table.header-table').forEach(function (ht) {
+      var meta = ht.querySelector('.meta-table');
+      if (!meta) return;
+      var first = ht.querySelector('tr');
+      if (!first) return;
+      var tbody = first.parentNode;
+      var tds = Array.prototype.slice.call(first.children);
+      if (tds.length < 3) return;
+      var mRows = Array.prototype.slice.call(meta.querySelectorAll('tr'));
+      if (!mRows.length) return;
+
+      /* lebar tetap (px) — Word menghormati atribut width pada sel */
+      tds[0].setAttribute('width', '215');   /* logo  */
+      tds[1].setAttribute('width', '329');   /* judul */
+      tds[0].setAttribute('rowspan', mRows.length);
+      tds[1].setAttribute('rowspan', mRows.length);
+
+      function lockWidths(row) {
+        var cs = Array.prototype.slice.call(row.children);
+        if (cs[0]) cs[0].setAttribute('width', '96');    /* label meta */
+        if (cs[1]) cs[1].setAttribute('width', '116');   /* nilai meta */
+      }
+      mRows.forEach(lockWidths);
+
+      /* pindahkan sel meta menjadi baris header (garis menyatu) */
+      Array.prototype.slice.call(mRows[0].children).forEach(function (c) { first.appendChild(c); });
+      tds[2].remove();
+      mRows[0].remove();
+      mRows.slice(1).forEach(function (r) { tbody.appendChild(r); });
+      meta.remove();
+    });
+
     root.querySelectorAll('.sign-wrap').forEach(function (wrap) {
       var header = wrap.querySelector('.sign-header');
       var cols = Array.prototype.slice.call(wrap.querySelectorAll('.sign-col'));
@@ -54,11 +92,9 @@
         h += '<td class="r" style="width:' + w + '%">' + esc(r ? r.textContent : '') + '</td>';
       });
       h += '</tr><tr>';
-      cols.forEach(function () { h += '<td class="s">&nbsp;</td>'; });
-      h += '</tr><tr>';
       cols.forEach(function (c) {
         var i = c.querySelector('.sign-input');
-        h += '<td class="nm" style="width:' + w + '%">(' + (i ? inputHtml(i) : '<span>&nbsp;</span>') + ')</td>';
+        h += '<td class="nm" style="width:' + w + '%;height:60px;vertical-align:bottom;">(' + (i ? inputHtml(i, mode) : '<span>&nbsp;</span>') + ')</td>';
       });
       h += '</tr></table>';
       var tmp = document.createElement('div');
@@ -104,7 +140,7 @@
 
     root.querySelectorAll('input').forEach(function (inp) {
       var tmp = document.createElement('div');
-      tmp.innerHTML = inputHtml(inp);
+      tmp.innerHTML = inputHtml(inp, mode);
       inp.replaceWith(tmp.firstChild);
     });
     root.querySelectorAll('textarea').forEach(function (t) {
@@ -142,6 +178,9 @@
     });
 
     each('.header-table td', function (c) { c.style.cssText += FULL + 'vertical-align:middle;'; });
+    each('.cell-meta', function (c) { c.style.cssText += 'padding:0;height:100%;'; });
+    each('table.meta-table', function (t) { t.style.cssText += 'width:100%;height:100%;border-collapse:collapse;'; });
+    each('table.meta-table td', function (c) { c.style.cssText += 'height:22px;'; });
     each('.cell-logo',  function (c) { c.style.cssText += 'text-align:center;'; });
     each('.cell-title', function (c) { c.style.cssText += 'text-align:center;vertical-align:middle;'; });
 
@@ -153,9 +192,16 @@
 
     each('table.info-inner td',
       function (c) { c.style.cssText += 'border:none;border-bottom:1px solid #bbb;padding:4px 6px;font-size:12px;'; });
+      
+    each('table.info-inner td.lbl',  function (c) { c.style.cssText += 'width:145px;'; });
+    each('table.info-inner td.sep',  function (c) { c.style.cssText += 'width:10px;'; });
+    each('table.info-single td.lbl', function (c) { c.style.cssText += 'width:210px;'; });
+    each('table.info-single td.sep', function (c) { c.style.cssText += 'width:10px;'; });
 
     each('table.meta-table td',
       function (c) { c.style.cssText += 'border:none;border-bottom:1px solid #000;padding:3px 5px;font-size:12px;vertical-align:middle;'; });
+    each('.meta-val',
+      function (c) { c.style.cssText += 'border-left:1px solid #000;'; });
     each('table.meta-table .meta-val',
       function (c) { c.style.cssText += 'border-left:1px solid #000;'; });
     each('table.meta-table tr:last-child td',
@@ -165,8 +211,16 @@
       function (t) { t.style.cssText += 'border-left:1px solid #000;border-right:1px solid #000;border-bottom:1px solid #000;border-top:none;'; });
     each('table.info-single td',
       function (c) { c.style.cssText += 'border:none;border-bottom:1px solid #bbb;padding:4px 6px;font-size:12px;'; });
+    
+      each('table.info-single tr', function (tr) {
+      var cells = tr.children;
+      if (!cells.length) return;
+      cells[0].style.cssText += 'border-left:1px solid #000;';
+      cells[cells.length - 1].style.cssText += 'border-right:1px solid #000;';
+    });
+    
     each('table.info-single tr:last-child td',
-      function (c) { c.style.cssText += 'border-bottom:none;'; });
+      function (c) { c.style.cssText += 'border-bottom:1px solid #000;'; });
 
     each('.spacer-row td, .exp-gap td',
       function (c) { c.style.cssText += 'border-left:1px solid #000;border-right:1px solid #000;border-top:none;border-bottom:none;height:9px;'; });
@@ -182,7 +236,11 @@
     'div.WordSection1 { page:WordSection1; }',
     '.cell-logo { width:215px; text-align:center; } .logo-img { width:200px; height:57px; }',
     '.cell-title { font-size:18px; font-weight:700; text-align:center; vertical-align:middle; }',
-    '.cell-meta { width:212px; }',
+    '.cell-logo { padding:6px 8px; }',
+    '.cell-title { padding:6px 4px; }',
+    '.cell-meta { width:212px; padding:0; height:100%; }',
+    'table.meta-table { width:100%; height:100%; }',
+    'table.meta-table td { height:22px; }',
     '.c-no { width:4%; } .c-item { width:37%; } .c-cond { width:7.5%; }',
     '.c-tindak { width:20%; } .c-saran { width:24%; }',
     '.c-sw-no { width:4%; } .c-sw-item { width:38%; } .c-sw-saran { width:58%; }',
@@ -197,16 +255,16 @@
   ].join('\n');
 
   /* ── bangun body transform (sumber tunggal utk PDF & Word) ── */
-  function buildBodyHtml() {
+  function buildBodyHtml(mode) {
     autoGrowAll();
     var clone = document.body.cloneNode(true);
-    transformClone(clone);
+    transformClone(clone, mode);
     inlineBorders(clone);
     return clone.innerHTML;
   }
 
   function buildExportHtml(mode) {
-    var bodyHtml = buildBodyHtml();
+    var bodyHtml = buildBodyHtml(mode);
     if (mode === 'word') {
       var mso = '<!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]-->';
       var ns = 'xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"';
@@ -238,7 +296,7 @@
     var html = buildExportHtml('pdf');
     var f = document.createElement('iframe');
     /* lebar iframe = lebar area cetak A4 @96dpi (210mm − margin 5mm×2 = 200mm ≈ 756px) */
-    f.style.cssText = 'position:fixed;left:-10000px;top:0;width:756px;height:1150px;border:0;';
+    f.style.cssText = 'position:fixed;left:-10000px;top:0;width:756px;height:1100px;border:0;';
     document.body.appendChild(f);
     var w = f.contentWindow;
     var d = w.document;
