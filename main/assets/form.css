@@ -74,8 +74,8 @@ input[type=checkbox]:checked::after {
   line-height: 1.2;
 }
 
-.cell-meta { width: 212px; padding: 0; }
-.meta-table { width: 100%; border-collapse: collapse; }
+.cell-meta { width: 212px; padding: 0; height: 70px; }
+.meta-table { width: 100%; height: 100%; border-collapse: collapse; }
 .meta-table tr { border-bottom: 1px solid #000; }
 .meta-table tr:last-child { border-bottom: none; }
 .meta-table td { padding: 3px 5px; font-size: 12px; border: none; white-space: nowrap; overflow: hidden; }
