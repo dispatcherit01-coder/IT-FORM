@@ -77,29 +77,70 @@
       meta.remove();
     });
 
+        /* ── SIGN-WRAP → tabel export (mendukung multi-grid, data-span, jabatan) ── */
     root.querySelectorAll('.sign-wrap').forEach(function (wrap) {
-      var header = wrap.querySelector('.sign-header');
-      var cols = Array.prototype.slice.call(wrap.querySelectorAll('.sign-col'));
-      var n = cols.length || 1;
-      var w = Math.floor(100 / n);
-      var h = '<table class="exp-sign" cellspacing="0">';
-      if (header) {
-        h += '<tr><td class="h" colspan="' + n + '">' + esc(header.textContent) + '</td></tr>';
+      var grids = Array.prototype.slice.call(wrap.querySelectorAll('.sign-grid'));
+      if (!grids.length) return;
+
+      function colsOf(grid) {
+        return Array.prototype.slice.call(grid.children).filter(function (c) {
+          return c.classList.contains('sign-col');
+        });
       }
-      h += '<tr>';
-      cols.forEach(function (c) {
-        var r = c.querySelector('.sign-role');
-        h += '<td class="r" style="width:' + w + '%">' + esc(r ? r.textContent : '') + '</td>';
+      function spanOf(c) { return parseInt(c.getAttribute('data-span') || '1', 10); }
+
+      var html = '<table class="exp-sign" cellspacing="0">';
+
+      var header = wrap.querySelector('.sign-header');
+      if (header) {
+        var t0 = colsOf(grids[0]).reduce(function (a, c) { return a + spanOf(c); }, 0);
+        html += '<tr><td class="h" colspan="' + t0 + '">' + esc(header.textContent) + '</td></tr>';
+      }
+
+      grids.forEach(function (grid) {
+        var cols = colsOf(grid);
+        var spans = cols.map(spanOf);
+        var total = spans.reduce(function (a, b) { return a + b; }, 0);
+        var w = 100 / total;
+        var hasName = cols.some(function (c) { return c.querySelector('.sign-name-wrap'); });
+
+        if (!hasName) {
+          /* baris header group (mis. DIAJUKAN OLEH / DISETUJUI OLEH span 2) */
+          html += '<tr>';
+          cols.forEach(function (c, i) {
+            var r = c.querySelector('.sign-role');
+            html += '<td class="h" colspan="' + spans[i] + '" style="width:' + (spans[i] * w) + '%">' + (r ? esc(r.textContent) : '&nbsp;') + '</td>';
+          });
+          html += '</tr>';
+        } else {
+          /* baris role */
+          html += '<tr>';
+          cols.forEach(function (c, i) {
+            var r = c.querySelector('.sign-role');
+            html += '<td class="r" colspan="' + spans[i] + '" style="width:' + (spans[i] * w) + '%">' + (r ? esc(r.textContent) : '&nbsp;') + '</td>';
+          });
+          html += '</tr><tr>';
+          /* baris nama (+jabatan) rata bawah; kolom kosong tetap kosong */
+          cols.forEach(function (c, i) {
+            if (!c.querySelector('.sign-name-wrap')) {
+              html += '<td colspan="' + spans[i] + '">&nbsp;</td>';
+              return;
+            }
+            var inp = c.querySelector('.sign-input');
+            var jab = c.querySelector('.sign-jabatan');
+            var inner = '(' + (inp ? inputHtml(inp, mode) : '<span>&nbsp;</span>') + ')';
+            if (jab) inner += '<div>' + esc(jab.textContent) + '</div>';
+            html += '<td colspan="' + spans[i] + '" style="height:60px;vertical-align:bottom;">' + inner + '</td>';
+          });
+          html += '</tr>';
+        }
       });
-      h += '</tr><tr>';
-      cols.forEach(function (c) {
-        var i = c.querySelector('.sign-input');
-        h += '<td class="nm" style="width:' + w + '%;height:60px;vertical-align:bottom;">(' + (i ? inputHtml(i, mode) : '<span>&nbsp;</span>') + ')</td>';
-      });
-      h += '</tr></table>';
+
+      html += '</table>';
       var tmp = document.createElement('div');
-      tmp.innerHTML = h;
-      wrap.replaceWith(tmp.firstChild);
+      tmp.innerHTML = html;
+      wrap.parentNode.insertBefore(tmp.firstChild, wrap);
+      wrap.remove();
     });
 
     root.querySelectorAll('.box').forEach(function (box) {
@@ -251,7 +292,8 @@
     '.exp-box td.bt { font-weight:700; }',
     '.exp-sec td { font-weight:700; }',
     '.cb-wrap label, .cb-item, .tl-item, .cb-inline { display:block; }',
-    '.note-list { font-size:12px; }'
+    '.note-list { font-size:12px; }',
+    '.catatan, .note-cell { font-style:italic; }',
   ].join('\n');
 
   /* ── bangun body transform (sumber tunggal utk PDF & Word) ── */

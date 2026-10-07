@@ -169,6 +169,13 @@ input[type=checkbox]:checked::after {
 .form-outer .spacer-row td { border-left: none !important; border-right: none !important; }
 .form-outer .box { border-left: none !important; border-right: none !important; }
 .form-outer .sign-wrap { border-left: none !important; border-right: none !important; border-bottom: none !important; }
+/* penutup bawah blok tanda tangan bila masih ada elemen setelahnya */
+.form-outer .sign-wrap.sign-b { border-bottom: 1px solid #000 !important; }
+
+.sign-col[data-span="2"] { grid-column: span 2; }
+.sign-col[data-span="3"] { grid-column: span 3; }
+
+.catatan, .note-cell { font-style: italic; }
 
 /* ══════════════════════════════════
    TAMBAHAN — FORM PENGAJUAN (other/)
@@ -227,6 +234,9 @@ input[type=checkbox]:checked::after {
 
 /* catatan asterisk (*) tampil sebagai teks sejajar baris label */
 .note-cell { font-weight: 400; font-size: 12px; }
+
+/* jabatan kecil di bawah garis nama pada blok tanda tangan */
+.sign-jabatan { font-size: 12px; font-weight: 400; text-align: center; margin-top: 2px; }
 
 /* ══════════════════════════════════
    PRINT — WYSIWYG, data lengkap, multi-halaman, MARGIN NARROW

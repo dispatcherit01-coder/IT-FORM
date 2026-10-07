@@ -70,56 +70,20 @@
     <textarea class="ket-area" rows="3"></textarea>
   </div>
 
-  <!-- ══ TANDA TANGAN 5 KOLOM ══ -->
-  <table class="tbl" style="table-layout:fixed;">
-  <colgroup>
-    <col style="width:20%"/><col style="width:20%"/><col style="width:20%"/><col style="width:20%"/><col style="width:20%"/>
-  </colgroup>
-  <thead>
-    <tr>
-      <th>DIAJUKAN OLEH;</th>
-      <th colspan="2">DISETUJUI OLEH;</th>
-      <th colspan="2">MENGETAHUI;</th>
-    </tr>
-    <tr>
-      <th>User</th>
-      <th>Manager Department</th>
-      <th>IT Head Of Department</th>
-      <th>IT Head Office</th>
-      <th>IT Manager</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td style="height:70px">&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-        <tr>
-      <td>
-        <div class="sign-name-wrap" style="width:96%;margin:0 auto;">
-          <span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span>
-        </div>
-      </td>
-      <td>
-        <div class="sign-name-wrap" style="width:96%;margin:0 auto;">
-          <span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span>
-        </div>
-      </td>
-      <td>
-        <div class="sign-name-wrap" style="width:96%;margin:0 auto;">
-          <span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span>
-        </div>
-      </td>
-      <td>
-        <div class="sign-name-wrap" style="width:96%;margin:0 auto;">
-          <span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span>
-        </div>
-      </td>
-      <td>
-        <div class="sign-name-wrap" style="width:96%;margin:0 auto;">
-          <span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span>
-        </div>
-      </td>
-    </tr>
-  </tbody>
-  </table>
+  <div class="sign-wrap sign-b">
+    <!-- baris header group : 4 kolom, span 1 + 3 (sejajar dgn kolom ttd) -->
+    <div class="sign-grid" style="grid-template-columns:repeat(4,1fr);">
+      <div class="sign-col" data-span="1" style="min-height:0; padding:3px 6px;"><div class="sign-role">DIAJUKAN OLEH</div></div>
+      <div class="sign-col" data-span="3" style="min-height:0; padding:3px 6px;"><div class="sign-role">DISETUJUI OLEH</div></div>
+    </div>
+    <!-- baris role + tanda tangan : 4 kolom -->
+    <div class="sign-grid" style="grid-template-columns:repeat(4,1fr); border-top:1px solid #000;">
+      <div class="sign-col"><div class="sign-role">USER</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">HEAD DEPARTEMENT USER</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">IT HEAD DIVISION</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+      <div class="sign-col"><div class="sign-role">IT HEAD DEPARTEMEN</div><div class="sign-space"></div><div class="sign-name-wrap"><span class="sp">(</span><input type="text" class="sign-input"/><span class="sp">)</span></div></div>
+    </div>
+  </div>
 
   <div class="box">
     <div class="box-title">PERHATIAN :</div>
